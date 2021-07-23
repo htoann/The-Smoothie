@@ -26,13 +26,7 @@ mongoose
 
 // routes
 app.get("/", (req, res) => res.render("home"));
-app.get("/smoothies", (req, res) => res.render("smoothies"));
-app.use(authRoutes);
 
-app.get("/set-cookies", (req, res) => {
-  res.cookie("newUser", false);
-  res.cookie("isEmployee", true, {
-    maxAge: 1000 * 60 * 60 * 24,
-    httpOnly: true,
-  });
-});
+app.get("/smoothies", (req, res) => res.render("smoothies"));
+
+app.use(authRoutes);
