@@ -1,1 +1,1 @@
-# The Smoothie - Smoothie Recipes
+# The Smoothie - Smoothies Recipes
