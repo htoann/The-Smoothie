@@ -16,7 +16,7 @@ app.use(cookieParser());
 app.set("view engine", "ejs");
 
 // database connection
-const dbURI = process.env.dbURI;
+const dbURI = "mongodb+srv://root:root@cluster0.aj2mc.mongodb.net/node_auth";
 mongoose
   .connect(dbURI, {
     useNewUrlParser: true,
