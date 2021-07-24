@@ -13,7 +13,7 @@ const handleErrors = (err) => {
   }
 
   // validation errors
-  if (err.message.includes("user validation failed")) {
+  if (err.message.includes("User validation failed")) {
     Object.values(err.errors).forEach(({ properties }) => {
       errors[properties.path] = properties.message;
     });
@@ -22,11 +22,20 @@ const handleErrors = (err) => {
   return errors;
 };
 
-module.exports.get_signup = (req, res, next) => {
+// create json web token
+const maxAge = 3 * 24 * 60 * 60;
+const createToken = (id) => {
+  return jwt.sign({ id }, "very secret", {
+    expiresIn: maxAge,
+  });
+};
+
+// controller actions
+module.exports.get_signup = (req, res) => {
   res.render("signup");
 };
 
-module.exports.get_login = (req, res, next) => {
+module.exports.get_login = (req, res) => {
   res.render("login");
 };
 
@@ -35,11 +44,23 @@ module.exports.post_signup = async (req, res) => {
 
   try {
     const user = await User.create({ email, password });
-    res.json(user);
+    const token = createToken(user._id);
+    res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
+    res.json({ user: user._id });
   } catch (err) {
     const errors = handleErrors(err);
     res.json({ errors });
   }
 };
 
-module.exports.post_login = async (req, res, next) => {};
+module.exports.post_login = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.login(email, password);
+    res.json({ user: user._id });
+  } catch (err) {
+    console.log(err);
+    res.json(err);
+  }
+};
