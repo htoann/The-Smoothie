@@ -1,1 +1,1 @@
-# Ninja Smoothies
+# The Smoothie - Smoothie Recipes
