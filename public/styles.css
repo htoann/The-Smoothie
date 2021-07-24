@@ -102,9 +102,10 @@ button {
 header {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 header img {
-  width: 250px;
+  border-radius: 10px;
   margin-right: 40px;
 }
 header h2 {
